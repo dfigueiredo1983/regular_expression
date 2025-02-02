@@ -14,17 +14,48 @@
 # []+ repetir o range pelo menos 1 vez
 
 import re
+from pprint import pprint
 
 texto = '''
-<p>Frase 1</p><p>Frase 2</p><p>Frase 3</p><div>Frase 4</div><p></p>
+<p>Frase 1</p><p>Frase 2</p><p>Frase 3</p><div>Frase 4</div><p>22</p>
 '''
 
-print(re.findall(r'<[pdiv]{1,3}>.*<\/[pdiv]{1,3}>', texto))
-print(re.findall(r'<[pdiv]{1,3}>.*?<\/[pdiv]{1,3}>', texto))
-print()
-print(re.findall(r'<[pdiv]{1,3}>.+?<\/[pdiv]{1,3}>', texto))
-print(re.findall(r'<[pdiv]{1,3}>.+?<\/[pdiv]{1,3}>', texto))
+tags = re.findall(r'(<([pdiv]{1,3})>.+?<\/\2>)', texto)
+list_tags = [um for um, dois in tags]
 
+# print(list_tags)
+# pprint(list_tags)
+
+# print('Texto interno')
+
+tags = re.findall(r'(<([pdiv]{1,3})>(.+?)<\/\2>)', texto)
+# print(tags)
+list_texto = [tres for um, dois, tres in tags]
+
+# print(list_texto)
+# pprint(list_texto)
+
+# print('Removendo um retrovisor')
+
+# tags = re.findall(r'<([pdiv]{1,3})>(?:.+?)<\/\1>', texto)
+# print(tags)
+
+cpf = '473.258.369-12'
+print(cpf)
+print(re.findall(r'[0-9]{3}', cpf))
+print(re.findall(r'[0-9]{3}[-.]', cpf))
+print(re.findall(r'[0-9]{3}\.', cpf))
+print(re.findall(r'[0-9]{3}\.[0-9]{3}\.[0-9]{3}', cpf))
+print(re.findall(r'[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}', cpf))
+
+print('Usando retrovisores')
+print(re.findall(r'(([0-9]{3}\.){2}[0-9]{3}-[0-9]{2})', cpf))
+print(re.findall(r'((?:[0-9]{3}\.){2}[0-9]{3}-[0-9]{2})', cpf))
+
+print(re.findall(r'((?:[0-9]{3}\.){2}[0-9]{3}-[0-9]{2})', cpf))
+
+
+print(re.findall(r'\b(\d{3}\.\d{3}\.\d{3}-\d{2})\b', cpf))
 
 
 
